@@ -9,14 +9,13 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import Store from 'electron-store';
-import clipboard from '@nandorojo/electron-clipboard';
 
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import clipboardService from './clipboard';
 
 class AppUpdater {
   constructor() {
@@ -67,8 +66,8 @@ const createWindow = async () => {
   };
 
   mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 728,
+    width: 550,
+    height: 650,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       sandbox: false,
@@ -138,29 +137,4 @@ app
   })
   .catch(console.log);
 
-const store = new Store({
-  schema: {
-    clipboardHistory: {
-      type: 'array',
-      default: ['https://google.com'],
-    },
-  },
-});
-
-clipboard
-  .on('text-changed', () => {
-    const history: string[] = store.has('clipboardHistory')
-      ? (store.get('clipboardHistory') as string[])
-      : [];
-    const current: string = clipboard.readText();
-    store.set('clipboardHistory', [...history, current]);
-  })
-  .startWatching();
-
-ipcMain.on('electron-store-get', async (event, val) => {
-  event.returnValue = store.get(val);
-});
-
-ipcMain.on('electron-store-set', async (_event, key, val) => {
-  store.set(key, val);
-});
+clipboardService();

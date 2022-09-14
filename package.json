@@ -109,6 +109,9 @@
   },
   "dependencies": {
     "@nandorojo/electron-clipboard": "^0.0.2",
+    "@tailwindcss/line-clamp": "^0.4.2",
+    "ajv": "^8.11.0",
+    "daisyui": "^2.27.0",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0",
@@ -121,6 +124,7 @@
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@svgr/webpack": "^6.3.1",
+    "@tailwindcss/typography": "^0.5.7",
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
