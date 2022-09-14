@@ -1,5 +1,6 @@
-import { ipcMain } from 'electron';
-import clipboard from '@nandorojo/electron-clipboard';
+import { clipboard, ipcMain } from 'electron';
+import clip from '@nandorojo/electron-clipboard';
+import crypto from 'crypto';
 
 import store, { STORE_KEYS, Text } from './store';
 
@@ -21,13 +22,17 @@ const updateClipboard = () => {
 };
 
 export default function clipboardService() {
-  clipboard.on('text-changed', updateClipboard).startWatching();
+  clip.on('text-changed', updateClipboard).startWatching();
 
   ipcMain.handle('store:get-texts', async () => {
     return store.get(STORE_KEYS.TEXTS);
   });
 
-  ipcMain.handle('store:copy-text', async (_event, text) => {
+  ipcMain.on('store:add-text', async (_event, text) => {
     clipboard.writeText(text);
+  });
+
+  ipcMain.handle('store:delete-texts', async () => {
+    store.reset(STORE_KEYS.TEXTS);
   });
 }
