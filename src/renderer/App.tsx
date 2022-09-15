@@ -52,12 +52,42 @@ const Home = () => {
               }}
               type="button"
               key={id}
-              className="card card-compact basis-full border-base-100 bg-base-100 shadow-sm transition hover:border-base-content hover:shadow-md"
+              className="card card-compact basis-full border-base-100 bg-base-100 shadow-sm transition hover:border-primary-focus hover:shadow-md"
             >
-              <div className="flex w-full justify-between p-4">
+              <div className="flex w-full justify-between gap-2 p-4">
                 <p className="text-start text-base leading-relaxed line-clamp-3">
                   {text}
                 </p>
+                <span
+                  role="button"
+                  tabIndex={0}
+                  aria-roledescription="delete text"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.electron.deleteText(id);
+                  }}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') {
+                      window.electron.deleteText(id);
+                    }
+                  }}
+                  className="btn btn-outline btn-square btn-xs"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </span>
               </div>
             </button>
           ))}

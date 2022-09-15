@@ -5,6 +5,7 @@ declare global {
     electron: {
       addText: (text: string) => void;
       getTexts: () => Promise<Text[]>;
+      deleteText: (id: string) => void;
       deleteTexts: () => void;
     };
   }

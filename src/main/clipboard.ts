@@ -24,12 +24,18 @@ const updateClipboard = () => {
 export default function clipboardService() {
   clip.on('text-changed', updateClipboard).startWatching();
 
+  ipcMain.on('store:add-text', async (_event, text) => {
+    clipboard.writeText(text);
+  });
+
   ipcMain.handle('store:get-texts', async () => {
     return store.get(STORE_KEYS.TEXTS);
   });
 
-  ipcMain.on('store:add-text', async (_event, text) => {
-    clipboard.writeText(text);
+  ipcMain.on('store:delete-text', async (_event, id) => {
+    const prev: Text[] = store.get(STORE_KEYS.TEXTS);
+    const result = prev.filter((p) => p.id !== id);
+    store.set(STORE_KEYS.TEXTS, result);
   });
 
   ipcMain.handle('store:delete-texts', async () => {
