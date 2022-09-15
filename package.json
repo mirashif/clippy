@@ -1,5 +1,5 @@
 {
-  "description": "A foundation for scalable desktop apps",
+  "description": "Simple clipboard manager",
   "keywords": [
     "electron",
     "boilerplate",
@@ -196,8 +196,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "clippy",
+    "appId": "com.mirashif.clippy",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
